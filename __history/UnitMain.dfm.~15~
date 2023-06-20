@@ -1,0 +1,89 @@
+object FMain: TFMain
+  Left = 0
+  Top = 0
+  Caption = 'Main Menu'
+  ClientHeight = 578
+  ClientWidth = 1370
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Padding.Left = 400
+  Padding.Top = 150
+  Padding.Right = 400
+  Padding.Bottom = 150
+  OldCreateOrder = False
+  WindowState = wsMaximized
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 400
+    Top = 150
+    Width = 570
+    Height = 278
+    Align = alClient
+    BevelOuter = bvNone
+    Padding.Left = 350
+    Padding.Top = 200
+    Padding.Right = 350
+    Padding.Bottom = 200
+    TabOrder = 0
+    ExplicitLeft = 520
+    ExplicitTop = 176
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    DesignSize = (
+      570
+      278)
+    object btnKasir: TButton
+      Left = 0
+      Top = 0
+      Width = 569
+      Height = 33
+      Anchors = [akLeft, akTop, akRight]
+      Caption = 'KASIR'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Poppins'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+    end
+    object btnBarang: TButton
+      Left = 0
+      Top = 47
+      Width = 569
+      Height = 33
+      Anchors = [akLeft, akTop, akRight]
+      Caption = 'DATA BARANG'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Poppins'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      Visible = False
+    end
+    object btnUser: TButton
+      Left = 0
+      Top = 94
+      Width = 569
+      Height = 33
+      Anchors = [akLeft, akTop, akRight]
+      Caption = 'DATA USER'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Poppins'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      Visible = False
+    end
+  end
+end

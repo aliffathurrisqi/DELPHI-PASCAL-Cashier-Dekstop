@@ -1,0 +1,141 @@
+unit UnitBarang;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.Grids, Vcl.DBGrids,
+  Vcl.Samples.Spin;
+
+type
+  TFBarang = class(TForm)
+    btnExit: TButton;
+    btnAdd: TButton;
+    btnEdit: TButton;
+    btnDelete: TButton;
+    btnFind: TButton;
+    PEditor: TPanel;
+    Data: TDBGrid;
+    QDATA: TZQuery;
+    DataBarang: TDataSource;
+    Label1: TLabel;
+    edKode: TEdit;
+    edNama: TEdit;
+    label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    spHarga: TSpinEdit;
+    spStok: TSpinEdit;
+    lbUser: TLabel;
+    QSQL: TZQuery;
+    btnSave: TButton;
+    btnCancel: TButton;
+    btnSearch: TButton;
+    procedure btnExitClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure ButtonActive(x1,x2,x3,x4 : integer);
+    procedure btnAddClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+    procedure btnSaveClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    roles : string;
+    username : string;
+    name : string;
+    input_mode : boolean;
+  end;
+
+var
+  FBarang: TFBarang;
+
+implementation
+
+uses UnitLogin, UnitMain;
+
+{$R *.dfm}
+
+procedure TFBarang.ButtonActive(x1,x2,x3,x4 : integer);
+begin
+if x1 = 1 then btnAdd.Enabled := true else btnAdd.Enabled := false;
+if x2 = 1 then btnEdit.Enabled := true else btnEdit.Enabled := false;
+if x3 = 1 then btnDelete.Enabled := true else btnDelete.Enabled := false;
+if x4 = 1 then btnFind.Enabled := true else btnFind.Enabled := false;
+
+end;
+
+procedure TFBarang.btnAddClick(Sender: TObject);
+begin
+  btnSave.Visible := true;
+  btnCancel.Visible := true;
+  input_mode := true;
+  PEditor.Enabled := true;
+  edKode.SetFocus;
+
+  ButtonActive(0,0,0,0);
+end;
+
+procedure TFBarang.btnCancelClick(Sender: TObject);
+begin
+  btnSave.Visible := false;
+  btnCancel.Visible := false;
+  btnSearch.Visible := false;
+
+  edKode.Clear;
+  edNama.Clear;
+  spHarga.Value := 0;
+  spStok.Value := 0;
+  PEditor.Enabled := false;
+
+  ButtonActive(1,0,0,1)
+end;
+
+procedure TFBarang.btnExitClick(Sender: TObject);
+begin
+  FBarang.Close;
+end;
+
+
+procedure TFBarang.btnSaveClick(Sender: TObject);
+begin
+if input_mode then
+  begin
+    QSQL.Close;
+    QSQL.SQL.Clear;
+    QSQL.SQL.Add('SELECT * FROM items WHERE kode_barang = ''' + edKode.Text + '''');
+    QSQL.Open;
+    if QSQL.RecordCount > 0 then
+      begin
+        ShowMessage('Kode Barang sudah digunakan....')
+      end
+    else
+      begin
+        QSQL.Close;
+        QSQL.SQL.Clear;
+        QSQL.SQL.Add('INSERT INTO items VALUES (''' + edKode.Text + ''', ''' + edNama.Text + ''', ''' + spHarga.Text + ''', ''' + spStok.Text + ''')');
+        QSQL.ExecSQL;
+        QSQL.Close;
+        QSQL.SQL.Clear;
+        QDATA.Close;
+        QDATA.Open;
+
+        ButtonActive(1,0,0,1);
+        btnSave.Visible := false;
+        btnCancel.Visible := false;
+        edKode.Clear;
+        edNama.Clear;
+        spHarga.Value := 0;
+        spStok.Value := 0;
+        PEditor.Enabled := false;
+      end;
+  end;
+end;
+
+procedure TFBarang.FormActivate(Sender: TObject);
+begin
+  lbUser.Caption := 'Pengguna : ' + name;
+end;
+
+end.

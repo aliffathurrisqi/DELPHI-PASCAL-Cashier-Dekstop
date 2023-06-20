@@ -1,0 +1,93 @@
+unit UnitBarang;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.Grids, Vcl.DBGrids,
+  Vcl.Samples.Spin;
+
+type
+  TFBarang = class(TForm)
+    btnExit: TButton;
+    btnAdd: TButton;
+    btnEdit: TButton;
+    btnDelete: TButton;
+    btnFind: TButton;
+    PEditor: TPanel;
+    Data: TDBGrid;
+    QDATA: TZQuery;
+    DataBarang: TDataSource;
+    Label1: TLabel;
+    edKode: TEdit;
+    edNama: TEdit;
+    label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    spHarga: TSpinEdit;
+    spStok: TSpinEdit;
+    lbUser: TLabel;
+    QSQL: TZQuery;
+    btnSave: TButton;
+    btnCancel: TButton;
+    procedure btnExitClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure ButtonActive(x1,x2,x3,x4 : integer);
+    procedure btnAddClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    roles : string;
+    username : string;
+    name : string;
+  end;
+
+var
+  FBarang: TFBarang;
+
+implementation
+
+uses UnitLogin, UnitMain;
+
+{$R *.dfm}
+
+procedure TFBarang.ButtonActive(x1,x2,x3,x4 : integer);
+begin
+if x1 = 1 then btnAdd.Enabled := true else btnAdd.Enabled := false;
+if x2 = 1 then btnEdit.Enabled := true else btnEdit.Enabled := false;
+if x3 = 1 then btnDelete.Enabled := true else btnDelete.Enabled := false;
+if x4 = 1 then btnFind.Enabled := true else btnFind.Enabled := false;
+
+end;
+
+procedure TFBarang.btnAddClick(Sender: TObject);
+begin
+  btnSave.Visible := true;
+  btnCancel.Visible := true;
+
+  ButtonActive(0,0,0,0);
+end;
+
+procedure TFBarang.btnCancelClick(Sender: TObject);
+begin
+  btnSave.Visible := false;
+  btnCancel.Visible := false;
+
+  ButtonActive(1,0,0,1)
+end;
+
+procedure TFBarang.btnExitClick(Sender: TObject);
+begin
+  FBarang.Close;
+end;
+
+
+procedure TFBarang.FormActivate(Sender: TObject);
+begin
+  lbUser.Caption := 'Pengguna : ' + name;
+end;
+
+end.
